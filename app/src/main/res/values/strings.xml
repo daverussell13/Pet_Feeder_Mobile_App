@@ -1,17 +1,34 @@
 <resources>
     <string name="app_name">Pet Feeder</string>
+
     <string name="register_title">REGISTER</string>
+
+    <string name="name_edt_label">Name</string>
     <string name="email_edt_label">Email Address</string>
-    <string name="email_edt_placeholder">Enter Your Email</string>
     <string name="phone_edt_label">Phone Number</string>
-    <string name="phone_edt_placeholder">+62 | Enter your phone number</string>
     <string name="password_edt_label">Password</string>
-    <string name="password_edt_placeholder">Enter your password</string>
     <string name="conf_password_edt_label">Confirm Password</string>
-    <string name="register_agreement">I agree to <a><u><font color="#FF8C42">Terms &amp; Condition</font></u></a></string>
+
+    <string name="email_edt_placeholder">Enter Your Email</string>
+    <string name="name_edt_placeholder">Enter your name</string>
+    <string name="phone_edt_placeholder">+62 | Enter your phone number</string>
+    <string name="password_edt_placeholder">Enter your password</string>
+
+    <string name="register_agreement">I agree to <a><u><font color="#FF8C42">Terms of use &amp; Privacy policy</font></u></a></string>
+    <string name="register_btn_label">register</string>
     <string name="login_title">Login</string>
     <string name="keep_login">Remember me</string>
     <string name="forgot_password">Forgot Password? </string>
     <string name="sign_up_choice">or sign up with</string>
-    <string name="register">Not register yet ? <b><font color="#2E86AB">Create Account </font> </b></string>
+    <string name="register_link">Not register yet ? <b><font color="#2E86AB">Create Account </font> </b></string>
+
+    <!--  Validation string  -->
+    <string name="validation_required">*Required</string>
+    <string name="validation_input_minimum">%s must atleast %s characters</string>
+    <string name="validation_input_exceeds">%s must not exceed %s characters</string>
+    <string name="validation_input_invalid">Invalid %s</string>
+    <string name="validation_input_not_match">%s not match</string>
+    <string name="validation_auth_failed">Failed to %s</string>
+    <string name="validation_agreements">Please agree to our terms of use and privacy policy</string>
+
 </resources>
