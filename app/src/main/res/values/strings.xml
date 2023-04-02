@@ -36,4 +36,13 @@
     <string name="apple_login">Apple Login</string>
     <string name="hero">Hero</string>
 
+    <string name="home">Home</string>
+    <string name="history">History</string>
+    <string name="schedule">Schedule</string>
+    <string name="devices">Devices</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="history_fragment">History Fragment</string>
+    <string name="device_fragment">Device Fragment</string>
+    <string name="schedule_fragment">Schedule Fragment</string>
+
 </resources>
