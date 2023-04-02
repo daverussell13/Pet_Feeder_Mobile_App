@@ -5,20 +5,22 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.damskuy.petfeedermobileapp.R;
-import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
 import com.damskuy.petfeedermobileapp.helpers.ViewHelper;
 import com.damskuy.petfeedermobileapp.ui.auth.AuthenticatedUserView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -26,6 +28,8 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputEditText edtName, edtEmail, edtPassword, edtConfPassword;
     private AppCompatButton btnRegister;
     private RegisterViewModel registerViewModel;
+    private SweetAlertDialog alertDialog;
+    private CheckBox checkBoxAgreement;
     private boolean formValid = false;
 
     @Override
@@ -41,23 +45,10 @@ public class RegisterActivity extends AppCompatActivity {
         observeRegisterResult();
         registerViewModel.observeFirebaseRegisterResult(this);
 
-        TextWatcher afterTextChangedListener = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                notifyRegisterInputChanged();
-            }
-        };
-
-        edtName.addTextChangedListener(afterTextChangedListener);
-        edtEmail.addTextChangedListener(afterTextChangedListener);
-        edtPassword.addTextChangedListener(afterTextChangedListener);
-        edtConfPassword.addTextChangedListener(afterTextChangedListener);
+        typingInputValidation(edtLayoutName, edtName);
+        typingInputValidation(edtLayoutEmail, edtEmail);
+        typingInputValidation(edtLayoutPassword, edtPassword);
+        typingInputValidation(edtLayoutConfPassword, edtConfPassword);
 
         btnRegister.setOnClickListener(v -> {
             if (!formValid) {
@@ -69,12 +60,48 @@ public class RegisterActivity extends AppCompatActivity {
                         500
                 );
             } else {
+                if (!checkBoxAgreement.isChecked()) {
+                    Toast.makeText(this, getString(R.string.validation_agrements), Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 String name = ViewHelper.getEdtText(edtName);
                 String email = ViewHelper.getEdtText(edtEmail);
                 String password = ViewHelper.getEdtText(edtPassword);
                 registerViewModel.register(name, email, password);
+                showLoadingDialog();
             }
         });
+    }
+
+    private void typingInputValidation(TextInputLayout edtLayout, TextInputEditText edt) {
+        Handler handler = new Handler();
+        Runnable runnable = this::notifyRegisterInputChanged;
+        TextWatcher typingInputWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                edtLayout.setErrorEnabled(false);
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                handler.removeCallbacks(runnable);
+                handler.postDelayed(runnable, 1000);
+            }
+        };
+        edt.addTextChangedListener(typingInputWatcher);
+    }
+
+    private void showLoadingDialog() {
+        alertDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        alertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        alertDialog.setTitleText("Loading");
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+    }
+
+    private void hideLoadingDialog() {
+        alertDialog.dismissWithAnimation();
     }
 
     private void notifyRegisterInputChanged() {
@@ -102,13 +129,14 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void observeRegisterResult() {
         registerViewModel.getRegisterResult().observe(this, registerResult -> {
+            hideLoadingDialog();
             AuthenticatedUserView userView = registerResult.getSuccess();
             String error = registerResult.getError();
             if (userView != null) {
-                Toast.makeText(this, "Success Register " + userView.getDisplayName(), Toast.LENGTH_SHORT).show();
+                ViewHelper.fireSuccessAlert(this, "Successfully Register");
             }
             if (error != null) {
-                Toast.makeText(this, "Failed " + error, Toast.LENGTH_SHORT).show();
+                ViewHelper.fireErrorAlert(this, error);
             }
         });
     }
@@ -123,6 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtConfPassword = findViewById(R.id.edt_conf_password_register);
         edtLayoutConfPassword = findViewById(R.id.edt_layout_conf_password_register);
         btnRegister = findViewById(R.id.btn_register);
+        checkBoxAgreement = findViewById(R.id.checkbox_agreement_register);
         textInputConfiguration();
     }
 

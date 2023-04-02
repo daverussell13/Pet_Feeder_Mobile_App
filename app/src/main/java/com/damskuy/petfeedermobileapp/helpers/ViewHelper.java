@@ -15,6 +15,8 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class ViewHelper {
 
     public static void hideTextInputHint(
@@ -39,5 +41,19 @@ public class ViewHelper {
         parent.startAnimation(shakeAnimation);
         service.vibrate(duration);
         new Handler().postDelayed(service::cancel, duration);
+    }
+
+    public static void fireSuccessAlert(Context context, String message) {
+        new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText("Success!")
+                .setContentText(message)
+                .show();
+    }
+
+    public static void fireErrorAlert(Context context, String message) {
+        new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE)
+                .setTitleText("Oops...")
+                .setContentText(message)
+                .show();
     }
 }

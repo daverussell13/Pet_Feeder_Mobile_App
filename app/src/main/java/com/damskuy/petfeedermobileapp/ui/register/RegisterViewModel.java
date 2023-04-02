@@ -36,7 +36,8 @@ public class RegisterViewModel extends AndroidViewModel {
                 AuthenticatedUser user = ((Result.Success<AuthenticatedUser>) firebaseRegisterResult).getData();
                 registerResult.postValue(new RegisterResult(new AuthenticatedUserView(user.getName())));
             } else {
-                registerResult.postValue(new RegisterResult(getString(R.string.validation_auth_failed, "Register")));
+                String error = ((Result.Error<AuthenticatedUser>) firebaseRegisterResult).getErrorMessage();
+                registerResult.postValue(new RegisterResult(error));
             }
         });
     }

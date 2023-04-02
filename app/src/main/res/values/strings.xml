@@ -14,7 +14,7 @@
     <string name="phone_edt_placeholder">+62 | Enter your phone number</string>
     <string name="password_edt_placeholder">Enter your password</string>
 
-    <string name="register_agreement">I agree to <a><u><font color="#FF8C42">Terms &amp; Condition</font></u></a></string>
+    <string name="register_agreement">I agree to <a><u><font color="#FF8C42">Terms of use &amp; Privacy policy</font></u></a></string>
     <string name="register_btn_label">register</string>
 
     <!--  Validation string  -->
@@ -24,5 +24,6 @@
     <string name="validation_input_invalid">Invalid %s</string>
     <string name="validation_input_not_match">%s not match</string>
     <string name="validation_auth_failed">Failed to %s</string>
+    <string name="validation_agrements">Please agree to our terms of use and privacy policy</string>
 
 </resources>
