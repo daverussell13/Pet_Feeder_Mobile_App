@@ -1,14 +1,16 @@
-package com.damskuy.petfeedermobileapp;
+package com.damskuy.petfeedermobileapp.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class RegisterActivity extends AppCompatActivity {
+import com.damskuy.petfeedermobileapp.R;
+
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_main);
     }
 }

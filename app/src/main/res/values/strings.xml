@@ -1,12 +1,27 @@
 <resources>
     <string name="app_name">Pet Feeder</string>
+
     <string name="register_title">REGISTER</string>
+
+    <string name="name_edt_label">Name</string>
     <string name="email_edt_label">Email Address</string>
-    <string name="email_edt_placeholder">Enter Your Email</string>
     <string name="phone_edt_label">Phone Number</string>
-    <string name="phone_edt_placeholder">+62 | Enter your phone number</string>
     <string name="password_edt_label">Password</string>
-    <string name="password_edt_placeholder">Enter your password</string>
     <string name="conf_password_edt_label">Confirm Password</string>
+
+    <string name="email_edt_placeholder">Enter Your Email</string>
+    <string name="name_edt_placeholder">Enter your name</string>
+    <string name="phone_edt_placeholder">+62 | Enter your phone number</string>
+    <string name="password_edt_placeholder">Enter your password</string>
+
     <string name="register_agreement">I agree to <a><u><font color="#FF8C42">Terms &amp; Condition</font></u></a></string>
+    <string name="register_btn_label">register</string>
+
+    <!--  Validation string  -->
+    <string name="validation_required">*Required</string>
+    <string name="validation_input_minimum">%s must atleast %s characters</string>
+    <string name="validation_input_exceeds">%s must not exceed %s characters</string>
+    <string name="validation_input_invalid">Invalid %s</string>
+    <string name="validation_input_not_match">%s not match</string>
+
 </resources>
