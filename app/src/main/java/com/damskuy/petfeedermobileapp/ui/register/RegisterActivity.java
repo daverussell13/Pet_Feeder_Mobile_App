@@ -5,6 +5,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,7 +16,9 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.damskuy.petfeedermobileapp.R;
+import com.damskuy.petfeedermobileapp.data.auth.AuthRepository;
 import com.damskuy.petfeedermobileapp.helpers.ViewHelper;
+import com.damskuy.petfeedermobileapp.ui.MainActivity;
 import com.damskuy.petfeedermobileapp.ui.auth.AuthenticatedUserView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -28,9 +31,18 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputEditText edtName, edtEmail, edtPassword, edtConfPassword;
     private AppCompatButton btnRegister;
     private RegisterViewModel registerViewModel;
-    private SweetAlertDialog alertDialog;
     private CheckBox checkBoxAgreement;
+    private SweetAlertDialog alertDialog;
     private boolean formValid = false;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (AuthRepository.getInstance() != null && AuthRepository.getInstance().isAuthenticated()) {
+            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +104,15 @@ public class RegisterActivity extends AppCompatActivity {
         edt.addTextChangedListener(typingInputWatcher);
     }
 
+    private void notifyRegisterInputChanged() {
+        registerViewModel.registerInputChanged(
+                ViewHelper.getEdtText(edtName),
+                ViewHelper.getEdtText(edtEmail),
+                ViewHelper.getEdtText(edtPassword),
+                ViewHelper.getEdtText(edtConfPassword)
+        );
+    }
+
     private void showLoadingDialog() {
         alertDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         alertDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -102,15 +123,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void hideLoadingDialog() {
         alertDialog.dismissWithAnimation();
-    }
-
-    private void notifyRegisterInputChanged() {
-        registerViewModel.registerInputChanged(
-                ViewHelper.getEdtText(edtName),
-                ViewHelper.getEdtText(edtEmail),
-                ViewHelper.getEdtText(edtPassword),
-                ViewHelper.getEdtText(edtConfPassword)
-        );
     }
 
     private void observeRegisterFormState() {
@@ -134,6 +146,8 @@ public class RegisterActivity extends AppCompatActivity {
             String error = registerResult.getError();
             if (userView != null) {
                 ViewHelper.fireSuccessAlert(this, "Successfully Register");
+                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                finish();
             }
             if (error != null) {
                 ViewHelper.fireErrorAlert(this, error);

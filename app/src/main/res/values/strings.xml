@@ -20,7 +20,8 @@
     <string name="keep_login">Remember me</string>
     <string name="forgot_password">Forgot Password? </string>
     <string name="sign_up_choice">or sign up with</string>
-    <string name="register_link">Not register yet ? <b><font color="#2E86AB">Create Account </font> </b></string>
+    <string name="not_register">Not register yet ?</string>
+    <string name="register_link"><b><font color="#2E86AB">Create Account</font></b></string>
 
     <!--  Validation string  -->
     <string name="validation_required">*Required</string>
@@ -30,5 +31,9 @@
     <string name="validation_input_not_match">%s not match</string>
     <string name="validation_auth_failed">Failed to %s</string>
     <string name="validation_agreements">Please agree to our terms of use and privacy policy</string>
+    <string name="google_login">Google Login</string>
+    <string name="facebook_login">Facebook Login</string>
+    <string name="apple_login">Apple Login</string>
+    <string name="hero">Hero</string>
 
 </resources>

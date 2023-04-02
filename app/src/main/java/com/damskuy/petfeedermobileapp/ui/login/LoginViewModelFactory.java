@@ -1,4 +1,4 @@
-package com.damskuy.petfeedermobileapp.ui.register;
+package com.damskuy.petfeedermobileapp.ui.login;
 
 import android.app.Application;
 
@@ -9,11 +9,11 @@ import androidx.lifecycle.ViewModelProvider;
 import com.damskuy.petfeedermobileapp.data.auth.AuthDataSource;
 import com.damskuy.petfeedermobileapp.data.auth.AuthRepository;
 
-public class RegisterViewModelFactory implements ViewModelProvider.Factory {
+public class LoginViewModelFactory implements ViewModelProvider.Factory {
 
     private final Application application;
 
-    public RegisterViewModelFactory(Application application) {
+    public LoginViewModelFactory(Application application)  {
         this.application = application;
     }
 
@@ -21,8 +21,8 @@ public class RegisterViewModelFactory implements ViewModelProvider.Factory {
     @Override
     @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(RegisterViewModel.class)) {
-            return (T) new RegisterViewModel(
+        if (modelClass.isAssignableFrom(LoginViewModel.class)) {
+            return (T) new LoginViewModel(
                     application,
                     AuthRepository.getInstance(new AuthDataSource())
             );
