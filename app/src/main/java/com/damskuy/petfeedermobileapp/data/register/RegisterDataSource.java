@@ -1,42 +1,48 @@
 package com.damskuy.petfeedermobileapp.data.register;
 
-import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.damskuy.petfeedermobileapp.core.Result;
-import com.damskuy.petfeedermobileapp.data.register.model.RegisteredUser;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
+import com.damskuy.petfeedermobileapp.data.entity.FirebaseUserEntity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterDataSource {
 
-    private final FirebaseAuth auth;
+    private final MutableLiveData<Result<AuthenticatedUser>> firebaseRegisterResult = new MutableLiveData<>();
+    private final FirebaseAuth firebaseAuth;
+    private final FirebaseDatabase firebaseDb;
+    private static final String FIREBASE_REALTIME_URL = "https://petfeeder-71649-default-rtdb.asia-southeast1.firebasedatabase.app";
 
     public RegisterDataSource() {
-        auth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDb = FirebaseDatabase.getInstance(FIREBASE_REALTIME_URL);
     }
 
-    private static class RegisterCompleteHandler implements OnCompleteListener<AuthResult> {
+    public LiveData<Result<AuthenticatedUser>> getFirebaseRegisterResult() { return firebaseRegisterResult; }
 
-        private Result<RegisteredUser> result;
-
-        @Override
-        public void onComplete(@NonNull Task<AuthResult> task) {
-            if (task.isSuccessful()) {
-                RegisteredUser user = new RegisteredUser("titit");
-                result = new Result.Success<>(user);
+    public void registerFirebase(String name, String email, String password) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(authTask -> {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            if (authTask.isSuccessful() && user != null) {
+                DatabaseReference usersRef = firebaseDb.getReference("users");
+                FirebaseUserEntity userEntity = new FirebaseUserEntity(name);
+                usersRef.child(user.getUid()).setValue(userEntity).addOnCompleteListener(storeTask -> {
+                    if (storeTask.isSuccessful()) {
+                        AuthenticatedUser authUser = new AuthenticatedUser(user.getUid(), name, user.getEmail());
+                        firebaseRegisterResult.postValue(new Result.Success<>(authUser));
+                    } else {
+                        user.delete();
+                        firebaseRegisterResult.postValue(new Result.Error<>(storeTask.getException()));
+                    }
+                });
             } else {
-                result = new Result.Error<>(task.getException());
+                firebaseRegisterResult.postValue(new Result.Error<>(authTask.getException()));
             }
-        }
-
-        public Result<RegisteredUser> getResult() { return result; }
-    }
-
-    public Result<RegisteredUser> register(String email, String pass) {
-        RegisterCompleteHandler handler = new RegisterCompleteHandler();
-        auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(handler);
-        return handler.getResult();
+        });
     }
 }

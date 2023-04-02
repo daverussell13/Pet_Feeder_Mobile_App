@@ -6,23 +6,44 @@ import android.util.Patterns;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.damskuy.petfeedermobileapp.R;
+import com.damskuy.petfeedermobileapp.core.Result;
+import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
 import com.damskuy.petfeedermobileapp.data.register.RegisterRepository;
-import com.damskuy.petfeedermobileapp.helpers.ViewHelper;
+import com.damskuy.petfeedermobileapp.ui.auth.AuthenticatedUserView;
 
 public class RegisterViewModel extends AndroidViewModel {
 
     private final MutableLiveData<RegisterFormState> registerFormState = new MutableLiveData<>();
+    private final MutableLiveData<RegisterResult> registerResult = new MutableLiveData<>();
+    private final RegisterRepository registerRepository;
 
-    public RegisterViewModel(@NonNull Application application) {
+    public RegisterViewModel(@NonNull Application application, RegisterRepository registerRepository) {
         super(application);
+        this.registerRepository = registerRepository;
     }
 
     public LiveData<RegisterFormState> getRegisterFormState() { return registerFormState; }
+    public LiveData<RegisterResult> getRegisterResult() { return  registerResult; }
+
+    public void observeFirebaseRegisterResult(LifecycleOwner owner) {
+        registerRepository.getRegisterResult().observe(owner, firebaseRegisterResult -> {
+            if (firebaseRegisterResult instanceof Result.Success) {
+                AuthenticatedUser user = ((Result.Success<AuthenticatedUser>) firebaseRegisterResult).getData();
+                registerResult.postValue(new RegisterResult(new AuthenticatedUserView(user.getName())));
+            } else {
+                registerResult.postValue(new RegisterResult(getString(R.string.validation_auth_failed, "Register")));
+            }
+        });
+    }
+
+    public void register(String name, String email, String password) {
+        registerRepository.register(name, email, password);
+    }
 
     public void registerInputChanged(String name, String email, String password, String confPassword) {
         String nameError = validateName(name);

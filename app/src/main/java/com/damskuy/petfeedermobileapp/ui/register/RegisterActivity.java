@@ -6,17 +6,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.damskuy.petfeedermobileapp.R;
+import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
 import com.damskuy.petfeedermobileapp.helpers.ViewHelper;
+import com.damskuy.petfeedermobileapp.ui.auth.AuthenticatedUserView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -39,6 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
         registerViewModel = registerViewModelProvider.get(RegisterViewModel.class);
 
         observeRegisterFormState();
+        observeRegisterResult();
+        registerViewModel.observeFirebaseRegisterResult(this);
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
@@ -61,15 +62,17 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(v -> {
             if (!formValid) {
                 notifyRegisterInputChanged();
-                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                View parent = findViewById(R.id.register_container);
-                ViewHelper.vibratePhone(getApplicationContext(), vibrator, parent, 500);
+                ViewHelper.vibratePhone(
+                        getApplicationContext(),
+                        (Vibrator) getSystemService(Context.VIBRATOR_SERVICE),
+                        findViewById(R.id.register_container),
+                        500
+                );
             } else {
                 String name = ViewHelper.getEdtText(edtName);
                 String email = ViewHelper.getEdtText(edtEmail);
                 String password = ViewHelper.getEdtText(edtPassword);
-                String confPassword = ViewHelper.getEdtText(edtConfPassword);
-                Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+                registerViewModel.register(name, email, password);
             }
         });
     }
@@ -94,6 +97,19 @@ public class RegisterActivity extends AppCompatActivity {
             if (registerFormState.getConfPasswordError() == null) edtLayoutConfPassword.setErrorEnabled(false);
             else edtLayoutConfPassword.setError(registerFormState.getConfPasswordError());
             formValid = registerFormState.isFormValid();
+        });
+    }
+
+    private void observeRegisterResult() {
+        registerViewModel.getRegisterResult().observe(this, registerResult -> {
+            AuthenticatedUserView userView = registerResult.getSuccess();
+            String error = registerResult.getError();
+            if (userView != null) {
+                Toast.makeText(this, "Success Register " + userView.getDisplayName(), Toast.LENGTH_SHORT).show();
+            }
+            if (error != null) {
+                Toast.makeText(this, "Failed " + error, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

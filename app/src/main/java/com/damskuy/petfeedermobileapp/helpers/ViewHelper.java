@@ -37,7 +37,7 @@ public class ViewHelper {
     public static void vibratePhone(Context context, Vibrator service, View parent, int duration) {
         Animation shakeAnimation = AnimationUtils.loadAnimation(context, R.anim.shake_animation);
         parent.startAnimation(shakeAnimation);
-        service.vibrate(500);
-        new Handler().postDelayed(service::cancel, 500);
+        service.vibrate(duration);
+        new Handler().postDelayed(service::cancel, duration);
     }
 }

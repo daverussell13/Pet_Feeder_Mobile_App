@@ -16,9 +16,7 @@ public class RegisterFormState {
     @Nullable
     private final String confPasswordError;
 
-    private boolean formValid;
-
-    RegisterFormState(
+    public RegisterFormState(
             @Nullable String nameError,
             @Nullable String emailError,
             @Nullable String passwordError,
@@ -30,15 +28,8 @@ public class RegisterFormState {
         this.confPasswordError = confPasswordError;
     }
 
-    RegisterFormState(boolean formValid) {
-        this(null, null, null, null);
-        this.formValid = formValid;
-    }
-
     @Nullable
-    public String getNameError() {
-        return nameError;
-    }
+    public String getNameError() { return nameError; }
 
     @Nullable
     public String getEmailError() {

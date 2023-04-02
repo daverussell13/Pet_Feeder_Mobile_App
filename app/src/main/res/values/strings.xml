@@ -23,5 +23,6 @@
     <string name="validation_input_exceeds">%s must not exceed %s characters</string>
     <string name="validation_input_invalid">Invalid %s</string>
     <string name="validation_input_not_match">%s not match</string>
+    <string name="validation_auth_failed">Failed to %s</string>
 
 </resources>
