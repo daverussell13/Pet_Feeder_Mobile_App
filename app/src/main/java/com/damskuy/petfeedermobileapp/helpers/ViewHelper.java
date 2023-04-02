@@ -1,10 +1,15 @@
 package com.damskuy.petfeedermobileapp.helpers;
 
-import android.text.Editable;
+import android.content.Context;
+import android.os.Handler;
+import android.os.Vibrator;
 import android.text.TextUtils;
-import android.text.TextWatcher;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
+import com.damskuy.petfeedermobileapp.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -29,45 +34,10 @@ public class ViewHelper {
         return Objects.requireNonNull(edt.getText()).toString();
     }
 
-    public static class TextChangeEvent implements TextWatcher {
-
-        public interface Before {
-            void callback(CharSequence s, int start, int count, int after);
-        }
-
-        public interface On {
-            void callback(CharSequence s, int start, int before, int count);
-        }
-
-        public interface After {
-            void callback(Editable s);
-        }
-
-        private Before beforeCallback;
-
-        private On onCallback;
-
-        private After afterCallback;
-
-        public TextChangeEvent(TextChangeEvent.Before callback) { beforeCallback = callback; }
-
-        public TextChangeEvent(TextChangeEvent.On callback) { onCallback = callback; }
-
-        public TextChangeEvent(TextChangeEvent.After callback) { afterCallback = callback; }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            beforeCallback.callback(s, start, count, after);
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            onCallback.callback(s, start, before, count);
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            afterCallback.callback(s);
-        }
+    public static void vibratePhone(Context context, Vibrator service, View parent, int duration) {
+        Animation shakeAnimation = AnimationUtils.loadAnimation(context, R.anim.shake_animation);
+        parent.startAnimation(shakeAnimation);
+        service.vibrate(500);
+        new Handler().postDelayed(service::cancel, 500);
     }
 }
