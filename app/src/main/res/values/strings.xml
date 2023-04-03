@@ -45,4 +45,10 @@
     <string name="device_fragment">Device Fragment</string>
     <string name="schedule_fragment">Schedule Fragment</string>
 
+    <string name="salam">HELLO, [NAME]!</string>
+    <string name="on">ON</string>
+    <string name="full">FULL</string>
+    <string name="feed">FEED NOW</string>
+    <string name="features">Features</string>
+
 </resources>

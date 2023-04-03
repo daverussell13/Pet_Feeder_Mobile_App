@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:showDividers="middle"
-    tools:context=".MainActivity">
+    android:showDividers="middle">
 
     <ImageView
         android:id="@+id/icon_profil"
