@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.damskuy.petfeedermobileapp.data.auth.AuthDataSource;
 import com.damskuy.petfeedermobileapp.data.auth.AuthRepository;
 
 public class RegisterViewModelFactory implements ViewModelProvider.Factory {
@@ -24,7 +23,7 @@ public class RegisterViewModelFactory implements ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(RegisterViewModel.class)) {
             return (T) new RegisterViewModel(
                     application,
-                    AuthRepository.getInstance(new AuthDataSource())
+                    AuthRepository.getInstance()
             );
         }
         throw new IllegalArgumentException("Unknown ViewModel class");

@@ -11,10 +11,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.damskuy.petfeedermobileapp.R;
+import com.damskuy.petfeedermobileapp.common.Result;
 import com.damskuy.petfeedermobileapp.data.auth.AuthRepository;
+import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
 import com.damskuy.petfeedermobileapp.helpers.ViewHelper;
 import com.damskuy.petfeedermobileapp.ui.MainActivity;
-import com.damskuy.petfeedermobileapp.ui.auth.AuthenticatedUserView;
 import com.damskuy.petfeedermobileapp.ui.register.RegisterActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -32,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (AuthRepository.getInstance() != null && AuthRepository.getInstance().isAuthenticated()) {
+        if (AuthRepository.getInstance().isAuthenticated()) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
@@ -44,11 +45,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         initUI();
 
-        ViewModelProvider loginViewModelProvider = new ViewModelProvider(this, new LoginViewModelFactory(getApplication()));
+        ViewModelProvider loginViewModelProvider =
+                new ViewModelProvider(this, new LoginViewModelFactory(getApplication()));
         loginViewModel = loginViewModelProvider.get(LoginViewModel.class);
 
         observeLoginResult();
-        loginViewModel.observeFirebaseLoginResult(this);
 
         registerLink.setOnClickListener(v ->
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
@@ -64,15 +65,13 @@ public class LoginActivity extends AppCompatActivity {
     private void observeLoginResult() {
         loginViewModel.getLoginResult().observe(this, loginResult -> {
             hideLoadingDialog();
-            AuthenticatedUserView userView = loginResult.getSuccess();
-            String error = loginResult.getError();
-            if (userView != null) {
-                ViewHelper.fireSuccessAlert(this, "Successfully Logged in");
+            if (loginResult instanceof Result.Success) {
+                ViewHelper.fireSuccessAlert(this, "Successfully Register");
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
-            }
-            if (error != null) {
-                ViewHelper.fireErrorAlert(this, error);
+            } else {
+                Result.Error<AuthenticatedUser> error = (Result.Error<AuthenticatedUser>) loginResult;
+                ViewHelper.fireErrorAlert(this, error.getErrorMessage());
             }
         });
     }

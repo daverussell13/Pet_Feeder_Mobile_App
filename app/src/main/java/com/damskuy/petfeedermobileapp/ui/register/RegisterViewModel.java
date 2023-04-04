@@ -6,21 +6,18 @@ import android.util.Patterns;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.damskuy.petfeedermobileapp.R;
-import com.damskuy.petfeedermobileapp.core.Result;
+import com.damskuy.petfeedermobileapp.common.Result;
 import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
 import com.damskuy.petfeedermobileapp.data.auth.AuthRepository;
-import com.damskuy.petfeedermobileapp.ui.auth.AuthenticatedUserView;
-import com.damskuy.petfeedermobileapp.ui.auth.AuthenticationResult;
 
 public class RegisterViewModel extends AndroidViewModel {
 
     private final MutableLiveData<RegisterFormState> registerFormState = new MutableLiveData<>();
-    private final MutableLiveData<AuthenticationResult> registerResult = new MutableLiveData<>();
+    private final MutableLiveData<Result<AuthenticatedUser>> registerResult = new MutableLiveData<>();
     private final AuthRepository authRepository;
 
     public RegisterViewModel(@NonNull Application application, AuthRepository authRepository) {
@@ -29,22 +26,10 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public LiveData<RegisterFormState> getRegisterFormState() { return registerFormState; }
-    public LiveData<AuthenticationResult> getRegisterResult() { return  registerResult; }
-
-    public void observeFirebaseRegisterResult(LifecycleOwner owner) {
-        authRepository.getFirebaseRegisterResult().observe(owner, firebaseRegisterResult -> {
-            if (firebaseRegisterResult instanceof Result.Success) {
-                AuthenticatedUser user = ((Result.Success<AuthenticatedUser>) firebaseRegisterResult).getData();
-                registerResult.postValue(new AuthenticationResult(new AuthenticatedUserView(user.getName())));
-            } else {
-                String error = ((Result.Error<AuthenticatedUser>) firebaseRegisterResult).getErrorMessage();
-                registerResult.postValue(new AuthenticationResult(error));
-            }
-        });
-    }
+    public LiveData<Result<AuthenticatedUser>> getRegisterResult() { return  registerResult; }
 
     public void register(String name, String email, String password) {
-        authRepository.register(name, email, password);
+        authRepository.register(name, email, password, registerResult);
     }
 
     public void registerInputChanged(String name, String email, String password, String confPassword) {

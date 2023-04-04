@@ -16,10 +16,11 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.damskuy.petfeedermobileapp.R;
+import com.damskuy.petfeedermobileapp.common.Result;
 import com.damskuy.petfeedermobileapp.data.auth.AuthRepository;
+import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
 import com.damskuy.petfeedermobileapp.helpers.ViewHelper;
 import com.damskuy.petfeedermobileapp.ui.MainActivity;
-import com.damskuy.petfeedermobileapp.ui.auth.AuthenticatedUserView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -38,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (AuthRepository.getInstance() != null && AuthRepository.getInstance().isAuthenticated()) {
+        if (AuthRepository.getInstance().isAuthenticated()) {
             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
             finish();
         }
@@ -50,12 +51,12 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         initUI();
 
-        ViewModelProvider registerViewModelProvider = new ViewModelProvider(this, new RegisterViewModelFactory(getApplication()));
+        ViewModelProvider registerViewModelProvider =
+                new ViewModelProvider(this, new RegisterViewModelFactory(getApplication()));
         registerViewModel = registerViewModelProvider.get(RegisterViewModel.class);
 
         observeRegisterFormState();
         observeRegisterResult();
-        registerViewModel.observeFirebaseRegisterResult(this);
 
         typingInputValidation(edtLayoutName, edtName);
         typingInputValidation(edtLayoutEmail, edtEmail);
@@ -121,9 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void hideLoadingDialog() {
-        alertDialog.dismissWithAnimation();
-    }
+    private void hideLoadingDialog() { alertDialog.dismissWithAnimation(); }
 
     private void observeRegisterFormState() {
         registerViewModel.getRegisterFormState().observe(this, registerFormState -> {
@@ -142,15 +141,13 @@ public class RegisterActivity extends AppCompatActivity {
     private void observeRegisterResult() {
         registerViewModel.getRegisterResult().observe(this, registerResult -> {
             hideLoadingDialog();
-            AuthenticatedUserView userView = registerResult.getSuccess();
-            String error = registerResult.getError();
-            if (userView != null) {
+            if (registerResult instanceof Result.Success) {
                 ViewHelper.fireSuccessAlert(this, "Successfully Register");
                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                 finish();
-            }
-            if (error != null) {
-                ViewHelper.fireErrorAlert(this, error);
+            } else {
+                Result.Error<AuthenticatedUser> error = (Result.Error<AuthenticatedUser>) registerResult;
+                ViewHelper.fireErrorAlert(this, error.getErrorMessage());
             }
         });
     }

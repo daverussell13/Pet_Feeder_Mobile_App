@@ -1,7 +1,6 @@
 package com.damskuy.petfeedermobileapp.helpers;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.text.TextUtils;
@@ -11,9 +10,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
 import com.damskuy.petfeedermobileapp.R;
-import com.damskuy.petfeedermobileapp.data.auth.AuthRepository;
-import com.damskuy.petfeedermobileapp.ui.auth.AuthenticationResult;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;

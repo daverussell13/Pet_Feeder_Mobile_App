@@ -1,6 +1,8 @@
-package com.damskuy.petfeedermobileapp.core;
+package com.damskuy.petfeedermobileapp.common;
 
 import androidx.annotation.NonNull;
+
+import java.util.Objects;
 
 public class Result<T> {
 
@@ -11,10 +13,10 @@ public class Result<T> {
     public String toString() {
         if (this instanceof Result.Success) {
             Result.Success<T> success = (Result.Success<T>) this;
-            return "Success[data=" + success.getData().toString() + "]";
+            return success.getData().toString();
         } else if (this instanceof Result.Error) {
             Result.Error<T> error = (Result.Error<T>) this;
-            return "Error[exception=" + error.getErrorMessage() + "]";
+            return error.getErrorMessage();
         }
         return "";
     }
