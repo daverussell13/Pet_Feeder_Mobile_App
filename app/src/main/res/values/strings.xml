@@ -19,7 +19,7 @@
     <string name="login_title">Login</string>
     <string name="keep_login">Remember me</string>
     <string name="forgot_password">Forgot Password? </string>
-    <string name="sign_up_choice">or sign up with</string>
+    <string name="sign_up_choice">OR</string>
     <string name="not_register">Not register yet ?</string>
     <string name="register_link"><b><font color="#2E86AB">Create Account</font></b></string>
 
@@ -33,7 +33,7 @@
     <string name="validation_agreements">Please agree to our terms of use and privacy policy</string>
     <string name="google_login">Google Login</string>
     <string name="facebook_login">Facebook Login</string>
-    <string name="apple_login">Apple Login</string>
+    <string name="twitter_login">Twitter Login</string>
     <string name="hero">Hero</string>
 
     <string name="home">Home</string>
@@ -50,5 +50,7 @@
     <string name="full">FULL</string>
     <string name="feed">FEED NOW</string>
     <string name="features">Features</string>
+    <string name="tempat_makan">tempat makan</string>
+    <string name="logout">Logout</string>
 
 </resources>

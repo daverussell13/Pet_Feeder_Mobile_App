@@ -99,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 handler.removeCallbacks(runnable);
-                handler.postDelayed(runnable, 1000);
+                handler.postDelayed(runnable, 700);
             }
         };
         edt.addTextChangedListener(typingInputWatcher);

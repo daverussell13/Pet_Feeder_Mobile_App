@@ -1,7 +1,9 @@
 package com.damskuy.petfeedermobileapp.data.entity;
 
+import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.PropertyName;
 
+@IgnoreExtraProperties
 public class FirebaseUserEntity {
 
     private String name;

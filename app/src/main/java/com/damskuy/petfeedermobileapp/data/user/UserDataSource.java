@@ -1,6 +1,10 @@
 package com.damskuy.petfeedermobileapp.data.user;
 
+import androidx.annotation.NonNull;
+
 import com.damskuy.petfeedermobileapp.data.entity.FirebaseUserEntity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -8,7 +12,8 @@ import com.google.firebase.database.ValueEventListener;
 public class UserDataSource {
 
     private final DatabaseReference usersRef;
-    private static final String FIREBASE_REALTIME_URL = "https://petfeeder-71649-default-rtdb.asia-southeast1.firebasedatabase.app";
+    private static final String FIREBASE_REALTIME_URL =
+            "https://petfeeder-71649-default-rtdb.asia-southeast1.firebasedatabase.app";
 
     public UserDataSource() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_REALTIME_URL);

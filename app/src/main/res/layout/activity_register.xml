@@ -226,7 +226,7 @@
             android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_register_btn"
+            android:background="@drawable/custom_blue_button_active"
             android:fontFamily="@font/rubikbold"
             android:text="@string/register_btn_label"
             android:textColor="@color/white"

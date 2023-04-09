@@ -1,6 +1,7 @@
 package com.damskuy.petfeedermobileapp.helpers;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.text.TextUtils;
@@ -55,4 +56,15 @@ public class ViewHelper {
                 .setContentText(message)
                 .show();
     }
+
+    public static SweetAlertDialog showLoadingDialog(Context context) {
+        SweetAlertDialog dialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
+        dialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        dialog.setTitleText("Loading");
+        dialog.setCancelable(false);
+        dialog.show();
+        return dialog;
+    }
+
+    public static void hideLoadingDialog(SweetAlertDialog dialog) { dialog.dismissWithAnimation(); }
 }

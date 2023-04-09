@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/login_container"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,8 +14,8 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         app:srcCompat="@drawable/logo"
         android:contentDescription="@string/hero" />
 
@@ -36,25 +37,34 @@
                 android:layout_height="wrap_content"
                 android:text="@string/email_edt_label"
                 android:textSize="16sp"
-                android:maxWidth="298dp"
                 android:fontFamily="@font/rubikmedium"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:labelFor="@id/edt_email_login" />
 
-            <EditText
-                android:id="@+id/edt_email_login"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edt_layout_email_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email_edt_placeholder"
-                android:autofillHints=""
-                android:inputType="textEmailAddress"
-                android:background="@drawable/custom_register_edt"
-                android:padding="15dp"
                 android:layout_marginTop="3dp"
-                android:maxWidth="298dp"
-                android:textSize="16sp"
-                android:fontFamily="@font/rubikregular"
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+                android:hint="@string/email_edt_placeholder"
                 android:textColorHint="@color/gray"
-                android:textColor="@color/black" />
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/edt_email_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:autofillHints=""
+                    android:inputType="textEmailAddress"
+                    android:background="@drawable/custom_register_edt"
+                    android:padding="15dp"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/rubikregular"
+                    android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
@@ -100,26 +110,20 @@
                     android:autofillHints="password"
                     android:textColor="@color/black"/>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/forgot_password"
+                        android:textColor="@color/purple_500"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/rubikregular"
+                        android:gravity="end"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginEnd="10dp"
+                        android:translationZ="10dp"
+                        tools:ignore="SmallSp" />
+
             </com.google.android.material.textfield.TextInputLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="5dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/forgot_password"
-                    android:textColor="@color/black"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/rubikregular"
-                    android:gravity="end"
-                    android:layout_marginEnd="10dp"
-                    tools:ignore="SmallSp" />
-
-            </LinearLayout>
 
         </LinearLayout>
 
@@ -128,30 +132,51 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="21dp">
+        android:paddingHorizontal="22dp">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_register_btn"
+            android:background="@drawable/custom_blue_button_active"
             android:fontFamily="@font/rubikbold"
             android:maxWidth="334dp"
             android:text="@string/login_title"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_marginEnd="15dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sign_up_choice"
             android:textColor="@color/black"
-            android:fontFamily="@font/rubikregular" />
+            android:fontFamily="@font/rubikregular"
+            android:textSize="18sp" />
+        
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -159,43 +184,47 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="53dp"
-            android:src="@drawable/apple"
-            android:paddingBottom="29dp"
-            android:contentDescription="@string/apple_login" />
+            android:id="@+id/img_twitter_signin"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@drawable/twitter_logo"
+            android:contentDescription="@string/twitter_login" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/facebook"
-            android:layout_marginStart="50dp"
-            android:contentDescription="@string/facebook_login" />
+            android:id="@+id/img_facebook_signin"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/facebook_login"
+            android:src="@drawable/facebook_logo"
+            android:layout_marginHorizontal="30dp" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/google"
-            android:layout_marginStart="50dp"
+            android:id="@+id/img_google_signin"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/google_logo"
             android:contentDescription="@string/google_login" />
 
     </LinearLayout>
 
     <LinearLayout android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/not_register"
             android:textColor="@color/black"
-            android:layout_marginEnd="5dp" />
+            android:layout_marginEnd="5dp"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/register_link"/>
+            android:text="@string/register_link"
+            android:textSize="15sp"/>
 
     </LinearLayout>
 
