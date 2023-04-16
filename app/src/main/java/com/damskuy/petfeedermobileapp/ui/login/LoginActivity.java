@@ -2,7 +2,6 @@ package com.damskuy.petfeedermobileapp.ui.login;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,11 +13,9 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.damskuy.petfeedermobileapp.R;
 import com.damskuy.petfeedermobileapp.common.Result;
@@ -65,15 +62,20 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         initUI();
 
-        ViewModelProvider loginViewModelProvider = new ViewModelProvider(this, new LoginViewModelFactory(getApplication()));
+        ViewModelProvider loginViewModelProvider =
+                new ViewModelProvider(this, new LoginViewModelFactory(getApplication()));
+
         loginViewModel = loginViewModelProvider.get(LoginViewModel.class);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso =
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
         googleSignInClient = GoogleSignIn.getClient(this, gso);
+        googleSignInClient.signOut();
+
         gsActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {

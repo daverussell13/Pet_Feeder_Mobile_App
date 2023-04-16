@@ -23,10 +23,5 @@ public class LoginFormState {
         return emailError;
     }
 
-    @Nullable
-    public String getPasswordError() {
-        return passwordError;
-    }
-
     public boolean isFormValid() { return emailError == null && passwordError == null; }
 }

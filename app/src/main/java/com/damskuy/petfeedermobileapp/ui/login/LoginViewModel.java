@@ -1,7 +1,5 @@
 package com.damskuy.petfeedermobileapp.ui.login;
 
-import static android.provider.Settings.System.getString;
-
 import android.app.Application;
 
 import androidx.annotation.NonNull;

@@ -16,10 +16,12 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_menu"
-        android:background="@color/white"
+        android:background="@color/primary_blue"
         android:layout_width="match_parent"
-        app:labelVisibilityMode="labeled"
+        app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_menu"
-        android:layout_height="56dp" />
+        android:layout_height="56dp"
+        app:itemTextColor="@color/white"
+        app:itemIconTint="@color/white" />
 
 </LinearLayout>

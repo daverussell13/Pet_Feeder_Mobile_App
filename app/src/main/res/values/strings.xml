@@ -52,5 +52,8 @@
     <string name="features">Features</string>
     <string name="tempat_makan">tempat makan</string>
     <string name="logout">Logout</string>
+    <string name="profile_button">profile button</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
 
 </resources>
