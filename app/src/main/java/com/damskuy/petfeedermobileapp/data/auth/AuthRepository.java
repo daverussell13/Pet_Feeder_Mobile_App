@@ -1,11 +1,14 @@
 package com.damskuy.petfeedermobileapp.data.auth;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.damskuy.petfeedermobileapp.common.Result;
 import com.damskuy.petfeedermobileapp.data.entity.FirebaseUserEntity;
 import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
+import com.damskuy.petfeedermobileapp.data.session.SessionManager;
 import com.damskuy.petfeedermobileapp.data.user.UserDataSource;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.AuthCredential;
@@ -36,6 +39,13 @@ public class AuthRepository {
     public AuthenticatedUser getAuthenticatedUser() { return user; }
 
     public boolean isAuthenticated() { return user != null; }
+
+    public void checkUserSession(Context context) {
+        AuthenticatedUser loggedInUser = new SessionManager(context).getUserSession();
+        setLoggedInUser(loggedInUser);
+    }
+
+    public void clearUserSession(Context context) { new SessionManager(context).removeUserSession(); }
 
     private void setLoggedInUser(AuthenticatedUser user) { this.user = user; }
 

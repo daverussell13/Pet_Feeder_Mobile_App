@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        AuthRepository.getInstance().checkUserSession(LoginActivity.this);
         if (AuthRepository.getInstance().isAuthenticated()) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
@@ -177,12 +178,14 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getLoginResult().observe(this, loginResult -> {
             ViewHelper.hideLoadingDialog(alertDialog);
             if (loginResult instanceof Result.Success) {
-                ViewHelper.fireSuccessAlert(this, "Successfully Register");
+                AuthenticatedUser user = ((Result.Success<AuthenticatedUser>) loginResult).getData();
+                loginViewModel.createUserSession(LoginActivity.this, user);
+                ViewHelper.fireSuccessAlert(this, "Login Success");
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             } else {
-                Result.Error<AuthenticatedUser> error = (Result.Error<AuthenticatedUser>) loginResult;
-                ViewHelper.fireErrorAlert(this, error.getErrorMessage());
+                String error = ((Result.Error<AuthenticatedUser>) loginResult).getErrorMessage();
+                ViewHelper.fireErrorAlert(this, error);
             }
         });
     }

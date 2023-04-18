@@ -1,6 +1,7 @@
 package com.damskuy.petfeedermobileapp.ui.login;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +13,7 @@ import com.damskuy.petfeedermobileapp.R;
 import com.damskuy.petfeedermobileapp.common.Result;
 import com.damskuy.petfeedermobileapp.data.auth.AuthRepository;
 import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
+import com.damskuy.petfeedermobileapp.data.session.SessionManager;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 public class LoginViewModel extends AndroidViewModel {
@@ -28,6 +30,11 @@ public class LoginViewModel extends AndroidViewModel {
     public LiveData<LoginFormState> getLoginFormState() { return loginFormState; }
 
     public LiveData<Result<AuthenticatedUser>> getLoginResult() { return loginResult; }
+
+    public void createUserSession(Context context, AuthenticatedUser user) {
+        SessionManager sessionManager = new SessionManager(context);
+        sessionManager.saveUserSession(user);
+    }
 
     public void login(String email, String password) {
         authRepository.login(email, password, loginResult);

@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "user profile clicked", Toast.LENGTH_SHORT).show();
         } else if (itemId == R.id.logout) {
             AuthRepository.getInstance().logout();
+            AuthRepository.getInstance().clearUserSession(MainActivity.this);
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         }
