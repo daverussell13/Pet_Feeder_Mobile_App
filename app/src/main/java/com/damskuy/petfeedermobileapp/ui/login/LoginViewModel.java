@@ -31,11 +31,6 @@ public class LoginViewModel extends AndroidViewModel {
 
     public LiveData<Result<AuthenticatedUser>> getLoginResult() { return loginResult; }
 
-    public void createUserSession(Context context, AuthenticatedUser user) {
-        SessionManager sessionManager = new SessionManager(context);
-        sessionManager.saveUserSession(user);
-    }
-
     public void login(String email, String password) {
         authRepository.login(email, password, loginResult);
     }

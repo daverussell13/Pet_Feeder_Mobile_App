@@ -179,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
             ViewHelper.hideLoadingDialog(alertDialog);
             if (loginResult instanceof Result.Success) {
                 AuthenticatedUser user = ((Result.Success<AuthenticatedUser>) loginResult).getData();
-                loginViewModel.createUserSession(LoginActivity.this, user);
+                AuthRepository.getInstance().createUserSession(LoginActivity.this, user);
                 ViewHelper.fireSuccessAlert(this, "Login Success");
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();

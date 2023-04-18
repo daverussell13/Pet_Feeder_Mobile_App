@@ -45,6 +45,11 @@ public class AuthRepository {
         setLoggedInUser(loggedInUser);
     }
 
+    public void createUserSession(Context context, AuthenticatedUser user) {
+        SessionManager sessionManager = new SessionManager(context);
+        sessionManager.saveUserSession(user);
+    }
+
     public void clearUserSession(Context context) { new SessionManager(context).removeUserSession(); }
 
     private void setLoggedInUser(AuthenticatedUser user) { this.user = user; }

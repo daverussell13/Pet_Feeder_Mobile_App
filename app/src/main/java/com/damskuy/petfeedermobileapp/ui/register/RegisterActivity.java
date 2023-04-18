@@ -39,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        AuthRepository.getInstance().checkUserSession(RegisterActivity.this);
         if (AuthRepository.getInstance().isAuthenticated()) {
             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
             finish();
@@ -142,12 +143,14 @@ public class RegisterActivity extends AppCompatActivity {
         registerViewModel.getRegisterResult().observe(this, registerResult -> {
             hideLoadingDialog();
             if (registerResult instanceof Result.Success) {
+                AuthenticatedUser user = ((Result.Success<AuthenticatedUser>) registerResult).getData();
                 ViewHelper.fireSuccessAlert(this, "Successfully Register");
+                AuthRepository.getInstance().createUserSession(RegisterActivity.this, user);
                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                 finish();
             } else {
-                Result.Error<AuthenticatedUser> error = (Result.Error<AuthenticatedUser>) registerResult;
-                ViewHelper.fireErrorAlert(this, error.getErrorMessage());
+                String error = ((Result.Error<AuthenticatedUser>) registerResult).getErrorMessage();
+                ViewHelper.fireErrorAlert(this, error);
             }
         });
     }
