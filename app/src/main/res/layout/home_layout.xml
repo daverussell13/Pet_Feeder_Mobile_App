@@ -79,11 +79,12 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_feed_home"
         android:layout_marginTop="20dp"
         android:layout_width="142dp"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_button_feed"
-        android:text="@string/feed"
+        android:text="@string/feed_now"
         android:textColor="@color/black"
         android:fontFamily="@font/rubikmedium" />
 
