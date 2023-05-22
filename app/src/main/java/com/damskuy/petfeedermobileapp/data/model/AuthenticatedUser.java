@@ -2,11 +2,11 @@ package com.damskuy.petfeedermobileapp.data.model;
 
 public class AuthenticatedUser {
 
-    private String userId;
+    private final String userId;
 
-    private String name;
+    private final String name;
 
-    private String email;
+    private final String email;
 
     public AuthenticatedUser(String userId, String name, String email) {
         this.userId = userId;

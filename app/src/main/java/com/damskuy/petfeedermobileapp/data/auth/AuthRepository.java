@@ -38,7 +38,10 @@ public class AuthRepository {
 
     public AuthenticatedUser getAuthenticatedUser() { return user; }
 
-    public boolean isAuthenticated() { return user != null; }
+    public boolean isAuthenticated(Context context) {
+        checkUserSession(context);
+        return user != null;
+    }
 
     public void checkUserSession(Context context) {
         AuthenticatedUser loggedInUser = new SessionManager(context).getUserSession();

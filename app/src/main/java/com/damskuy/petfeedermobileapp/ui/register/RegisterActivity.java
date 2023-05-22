@@ -39,9 +39,8 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        AuthRepository.getInstance().checkUserSession(RegisterActivity.this);
-        if (AuthRepository.getInstance().isAuthenticated()) {
-            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+        if (registerViewModel.isLoggedIn()) {
+            startActivity(new Intent(this, MainActivity.class));
             finish();
         }
     }

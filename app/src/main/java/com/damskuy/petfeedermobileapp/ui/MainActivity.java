@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
         } else if (itemId == R.id.logout) {
             AuthRepository.getInstance().logout();
             AuthRepository.getInstance().clearUserSession(MainActivity.this);
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }
         return true;
     }

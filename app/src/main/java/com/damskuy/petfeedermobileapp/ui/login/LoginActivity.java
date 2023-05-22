@@ -50,9 +50,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        AuthRepository.getInstance().checkUserSession(LoginActivity.this);
-        if (AuthRepository.getInstance().isAuthenticated()) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        if (loginViewModel.isLoggedIn()) {
+            startActivity(new Intent(this, MainActivity.class));
             finish();
         }
     }

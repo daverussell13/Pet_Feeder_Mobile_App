@@ -1,6 +1,8 @@
 package com.damskuy.petfeedermobileapp.ui.register;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Patterns;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,7 @@ import com.damskuy.petfeedermobileapp.R;
 import com.damskuy.petfeedermobileapp.common.Result;
 import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
 import com.damskuy.petfeedermobileapp.data.auth.AuthRepository;
+import com.damskuy.petfeedermobileapp.ui.MainActivity;
 
 public class RegisterViewModel extends AndroidViewModel {
 
@@ -85,5 +88,10 @@ public class RegisterViewModel extends AndroidViewModel {
 
     private String getString(Integer resId, Object... format) {
         return getApplication().getString(resId, format);
+    }
+
+    public boolean isLoggedIn() {
+        Context ownerContext = getApplication().getApplicationContext();
+        return this.authRepository.isAuthenticated(ownerContext);
     }
 }

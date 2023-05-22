@@ -59,4 +59,9 @@ public class LoginViewModel extends AndroidViewModel {
     private String getString(Integer resId) {
         return getApplication().getString(resId);
     }
+
+    public boolean isLoggedIn() {
+        Context ownerContext = getApplication().getApplicationContext();
+        return this.authRepository.isAuthenticated(ownerContext);
+    }
 }
