@@ -1,8 +1,8 @@
-package com.damskuy.petfeedermobileapp.api.retrofit.model;
+package com.damskuy.petfeedermobileapp.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class RealtimeRequest {
+public class RealtimeFeedRequest {
 
     @SerializedName("device_id")
     private final String deviceId;
@@ -10,7 +10,7 @@ public class RealtimeRequest {
     @SerializedName("feed_amount")
     private final int feedAmount;
 
-    public RealtimeRequest(String deviceId, int feedAmount) {
+    public RealtimeFeedRequest(String deviceId, int feedAmount) {
         this.deviceId = deviceId;
         this.feedAmount = feedAmount;
     }
