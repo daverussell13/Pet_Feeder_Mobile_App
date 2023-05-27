@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.NumberPicker;
 
@@ -46,10 +45,14 @@ public class RealtimeFeedActivity extends AppCompatActivity {
 
     private void initUI() {
        npServings = findViewById(R.id.np_servings_realtime);
-       npServings.setMinValue(Feed.MIN_FEED_AMOUNT);
-       npServings.setMaxValue(Feed.MAX_FEED_AMOUNT);
        btnFeed = findViewById(R.id.btn_feed_realtime);
        btnCancel = findViewById(R.id.btn_cancel_realtime);
+       numberPickerConfig();
+    }
+
+    private void numberPickerConfig() {
+        npServings.setMinValue(Feed.MIN_FEED_AMOUNT);
+        npServings.setMaxValue(Feed.MAX_FEED_AMOUNT);
     }
 
     private void initHandlers() {

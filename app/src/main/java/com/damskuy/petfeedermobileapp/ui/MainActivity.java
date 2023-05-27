@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (item.getItemId() == R.id.item_history) {
                 replaceFragmentLayout(new HistoryFragment());
-                actionBar.setTitle("History");
+                actionBar.setTitle("Feed History");
             }
             if (item.getItemId() == R.id.item_devices) {
                 replaceFragmentLayout(new DevicesFragment());
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (item.getItemId() ==R.id.item_schedule) {
                 replaceFragmentLayout(new ScheduleFragment());
-                actionBar.setTitle("Schedule");
+                actionBar.setTitle("My Schedules");
             }
             return true;
         });
