@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.damskuy.petfeedermobileapp.data.model.Result;
-import com.damskuy.petfeedermobileapp.data.model.ScheduleFeed;
-import com.damskuy.petfeedermobileapp.data.model.ScheduleFeedRequest;
-import com.damskuy.petfeedermobileapp.data.model.ScheduleFeedResponse;
+import com.damskuy.petfeedermobileapp.data.model.Schedule;
+import com.damskuy.petfeedermobileapp.data.dto.ScheduleFeedRequest;
+import com.damskuy.petfeedermobileapp.data.dto.ScheduleFeedResponse;
 import com.damskuy.petfeedermobileapp.utils.JsonUtils;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class FeedRepository {
     }
 
     public void scheduleFeed(
-            MutableLiveData<Result<ScheduleFeed>> result,
+            MutableLiveData<Result<Schedule>> result,
             ScheduleFeedRequest request
     ) {
         feedDataSource.scheduleFeed(new Callback<ScheduleFeedResponse>() {
@@ -57,12 +57,12 @@ public class FeedRepository {
                     result.postValue(new Result.Error<>(new Exception("Unable to get response data")));
                     return;
                 }
-                ScheduleFeed scheduleFeed = new ScheduleFeed()
+                Schedule schedule = new Schedule()
                         .setId(responseData.getData().getScheduleId())
                         .setFeed(request.getFeedAmount())
                         .setDay(request.getDayOfWeek())
                         .setScheduleTime(request.getFeedTime());
-                result.postValue(new Result.Success<>(scheduleFeed));
+                result.postValue(new Result.Success<>(schedule));
             }
 
             @Override

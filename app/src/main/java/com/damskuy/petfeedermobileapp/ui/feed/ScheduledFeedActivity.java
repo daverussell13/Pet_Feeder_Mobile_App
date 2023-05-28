@@ -13,10 +13,9 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.damskuy.petfeedermobileapp.R;
-import com.damskuy.petfeedermobileapp.api.retrofit.RetrofitService;
 import com.damskuy.petfeedermobileapp.data.model.Feed;
 import com.damskuy.petfeedermobileapp.data.model.Result;
-import com.damskuy.petfeedermobileapp.data.model.ScheduleFeed;
+import com.damskuy.petfeedermobileapp.data.model.Schedule;
 import com.damskuy.petfeedermobileapp.utils.ViewUtils;
 
 import java.util.Locale;
@@ -97,7 +96,7 @@ public class ScheduledFeedActivity extends AppCompatActivity {
                 return;
             }
             String amPm = npAmPm.getValue() == 0 ? "AM" : "PM";
-            ScheduleFeed scheduledFeed = new ScheduleFeed()
+            Schedule scheduledFeed = new Schedule()
                     .setFeed(npServings.getValue())
                     .setDayAbv(chosenDayAbv)
                     .setScheduleTime(npHour.getValue(), npMinute.getValue(), amPm);
@@ -112,7 +111,7 @@ public class ScheduledFeedActivity extends AppCompatActivity {
             if (scheduleFeedResult instanceof Result.Success) {
                 ViewUtils.fireSuccessAlert(ScheduledFeedActivity.this, "Added new schedule!");
             } else {
-                String errorMsg = ((Result.Error<ScheduleFeed>) scheduleFeedResult).getErrorMessage();
+                String errorMsg = ((Result.Error<Schedule>) scheduleFeedResult).getErrorMessage();
                 ViewUtils.fireErrorAlert(ScheduledFeedActivity.this, errorMsg);
             }
         });

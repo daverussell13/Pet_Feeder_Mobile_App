@@ -1,8 +1,8 @@
 package com.damskuy.petfeedermobileapp.data.feed;
 
 import com.damskuy.petfeedermobileapp.BuildConfig;
-import com.damskuy.petfeedermobileapp.data.model.ScheduleFeedRequest;
-import com.damskuy.petfeedermobileapp.data.model.ScheduleFeedResponse;
+import com.damskuy.petfeedermobileapp.data.dto.ScheduleFeedRequest;
+import com.damskuy.petfeedermobileapp.data.dto.ScheduleFeedResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
