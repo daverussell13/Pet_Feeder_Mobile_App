@@ -1,4 +1,4 @@
-package com.damskuy.petfeedermobileapp.helpers;
+package com.damskuy.petfeedermobileapp.utils;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -17,7 +17,7 @@ import java.util.Objects;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class ViewHelper {
+public class ViewUtils {
 
     public static void hideTextInputHint(
             boolean focus,

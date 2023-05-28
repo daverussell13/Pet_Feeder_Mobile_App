@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.damskuy.petfeedermobileapp.common.Result;
+import com.damskuy.petfeedermobileapp.data.model.Result;
 import com.damskuy.petfeedermobileapp.data.entity.FirebaseUserEntity;
 import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
 import com.damskuy.petfeedermobileapp.data.session.SessionManager;
@@ -81,7 +81,7 @@ public class AuthRepository {
         authDataSource.loginFirebase(email, password, task -> {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if (task.isSuccessful() && user != null) fetchUserFromRealtimeDB(user, result);
-            else result.postValue(new Result.Error<>(new Exception("Something went wrong!")));
+            else result.postValue(new Result.Error<>(new Exception("Wrong credentials")));
         });
     }
 

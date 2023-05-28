@@ -70,4 +70,5 @@
     <string name="friday_abv">Fri</string>
     <string name="saturday_abv">Sat</string>
     <string name="sunday_abv">Sun</string>
+    <string name="realtime_feed">Realtime Feed</string>
 </resources>

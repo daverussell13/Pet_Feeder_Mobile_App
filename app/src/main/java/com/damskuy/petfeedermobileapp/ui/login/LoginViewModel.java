@@ -10,10 +10,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.damskuy.petfeedermobileapp.R;
-import com.damskuy.petfeedermobileapp.common.Result;
+import com.damskuy.petfeedermobileapp.data.model.Result;
 import com.damskuy.petfeedermobileapp.data.auth.AuthRepository;
 import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
-import com.damskuy.petfeedermobileapp.data.session.SessionManager;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 public class LoginViewModel extends AndroidViewModel {

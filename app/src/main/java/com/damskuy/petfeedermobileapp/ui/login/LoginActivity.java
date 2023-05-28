@@ -18,10 +18,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.damskuy.petfeedermobileapp.R;
-import com.damskuy.petfeedermobileapp.common.Result;
+import com.damskuy.petfeedermobileapp.data.model.Result;
 import com.damskuy.petfeedermobileapp.data.auth.AuthRepository;
 import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
-import com.damskuy.petfeedermobileapp.helpers.ViewHelper;
+import com.damskuy.petfeedermobileapp.utils.ViewUtils;
 import com.damskuy.petfeedermobileapp.ui.MainActivity;
 import com.damskuy.petfeedermobileapp.ui.register.RegisterActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -79,15 +79,15 @@ public class LoginActivity extends AppCompatActivity {
         gsActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    ViewHelper.hideLoadingDialog(alertDialog);
+                    ViewUtils.hideLoadingDialog(alertDialog);
                     Intent data = result.getData();
                     Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
                     try {
                         GoogleSignInAccount account = task.getResult(ApiException.class);
-                        alertDialog = ViewHelper.showLoadingDialog(this);
+                        alertDialog = ViewUtils.showLoadingDialog(this);
                         loginViewModel.loginWithGoogle(account);
                     } catch (ApiException e) {
-                        ViewHelper.fireErrorAlert(this, "Google sign in failed");
+                        ViewUtils.fireErrorAlert(this, "Google sign in failed");
                     }
                 }
         );
@@ -115,13 +115,13 @@ public class LoginActivity extends AppCompatActivity {
     private void loginButtonClickEventHandler() {
         btnLogin.setOnClickListener(v -> {
             if (formValid) {
-                String email = ViewHelper.getEdtText(edtEmail);
-                String password = ViewHelper.getEdtText(edtPassword);
+                String email = ViewUtils.getEdtText(edtEmail);
+                String password = ViewUtils.getEdtText(edtPassword);
                 loginViewModel.login(email, password);
-                alertDialog = ViewHelper.showLoadingDialog(this);
+                alertDialog = ViewUtils.showLoadingDialog(this);
             } else {
                 notifyLoginInputChanged();
-                ViewHelper.vibratePhone(
+                ViewUtils.vibratePhone(
                         getApplicationContext(),
                         (Vibrator) getSystemService(Context.VIBRATOR_SERVICE),
                         findViewById(R.id.login_container),
@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
     private void gsButtonClickEventHandler() {
         googleSignIn.setOnClickListener(v -> {
             Intent signInIntent = googleSignInClient.getSignInIntent();
-            alertDialog = ViewHelper.showLoadingDialog(this);
+            alertDialog = ViewUtils.showLoadingDialog(this);
             gsActivityResultLauncher.launch(signInIntent);
         });
     }
@@ -160,8 +160,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void notifyLoginInputChanged() {
         loginViewModel.loginInputChange(
-                ViewHelper.getEdtText(edtEmail),
-                ViewHelper.getEdtText(edtPassword)
+                ViewUtils.getEdtText(edtEmail),
+                ViewUtils.getEdtText(edtPassword)
         );
     }
 
@@ -175,16 +175,16 @@ public class LoginActivity extends AppCompatActivity {
 
     private void observeLoginResult() {
         loginViewModel.getLoginResult().observe(this, loginResult -> {
-            ViewHelper.hideLoadingDialog(alertDialog);
+            ViewUtils.hideLoadingDialog(alertDialog);
             if (loginResult instanceof Result.Success) {
                 AuthenticatedUser user = ((Result.Success<AuthenticatedUser>) loginResult).getData();
                 AuthRepository.getInstance().createUserSession(LoginActivity.this, user);
-                ViewHelper.fireSuccessAlert(this, "Login Success");
+                ViewUtils.fireSuccessAlert(this, "Login Success");
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             } else {
                 String error = ((Result.Error<AuthenticatedUser>) loginResult).getErrorMessage();
-                ViewHelper.fireErrorAlert(this, error);
+                ViewUtils.fireErrorAlert(this, error);
             }
         });
     }
@@ -207,8 +207,8 @@ public class LoginActivity extends AppCompatActivity {
         String edtPasswordHint = getString(R.string.email_edt_placeholder);
 
         edtEmail.setOnFocusChangeListener((v, hasFocus) ->
-                ViewHelper.hideTextInputHint(hasFocus, edtEmail, edtLayoutEmail, edtEmailHint));
+                ViewUtils.hideTextInputHint(hasFocus, edtEmail, edtLayoutEmail, edtEmailHint));
         edtPassword.setOnFocusChangeListener((v, hasFocus) ->
-                ViewHelper.hideTextInputHint(hasFocus, edtPassword, edtLayoutPassword, edtPasswordHint));
+                ViewUtils.hideTextInputHint(hasFocus, edtPassword, edtLayoutPassword, edtPasswordHint));
     }
 }

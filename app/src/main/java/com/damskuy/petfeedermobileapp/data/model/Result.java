@@ -1,8 +1,6 @@
-package com.damskuy.petfeedermobileapp.common;
+package com.damskuy.petfeedermobileapp.data.model;
 
 import androidx.annotation.NonNull;
-
-import java.util.Objects;
 
 public class Result<T> {
 

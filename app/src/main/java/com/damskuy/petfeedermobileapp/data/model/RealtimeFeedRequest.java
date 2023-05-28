@@ -10,9 +10,9 @@ public class RealtimeFeedRequest {
     @SerializedName("feed_amount")
     private final int feedAmount;
 
-    public RealtimeFeedRequest(String deviceId, int feedAmount) {
+    public RealtimeFeedRequest(String deviceId, Feed feed) {
         this.deviceId = deviceId;
-        this.feedAmount = feedAmount;
+        this.feedAmount = feed.getFeedAmount();
     }
 
     public String getDeviceId() {

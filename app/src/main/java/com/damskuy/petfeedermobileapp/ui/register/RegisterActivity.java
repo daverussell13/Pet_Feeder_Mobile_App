@@ -16,10 +16,10 @@ import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.damskuy.petfeedermobileapp.R;
-import com.damskuy.petfeedermobileapp.common.Result;
+import com.damskuy.petfeedermobileapp.data.model.Result;
 import com.damskuy.petfeedermobileapp.data.auth.AuthRepository;
 import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
-import com.damskuy.petfeedermobileapp.helpers.ViewHelper;
+import com.damskuy.petfeedermobileapp.utils.ViewUtils;
 import com.damskuy.petfeedermobileapp.ui.MainActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -66,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(v -> {
             if (!formValid) {
                 notifyRegisterInputChanged();
-                ViewHelper.vibratePhone(
+                ViewUtils.vibratePhone(
                         getApplicationContext(),
                         (Vibrator) getSystemService(Context.VIBRATOR_SERVICE),
                         findViewById(R.id.register_container),
@@ -77,9 +77,9 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(this, getString(R.string.validation_agreements), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                String name = ViewHelper.getEdtText(edtName);
-                String email = ViewHelper.getEdtText(edtEmail);
-                String password = ViewHelper.getEdtText(edtPassword);
+                String name = ViewUtils.getEdtText(edtName);
+                String email = ViewUtils.getEdtText(edtEmail);
+                String password = ViewUtils.getEdtText(edtPassword);
                 registerViewModel.register(name, email, password);
                 showLoadingDialog();
             }
@@ -107,10 +107,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void notifyRegisterInputChanged() {
         registerViewModel.registerInputChanged(
-                ViewHelper.getEdtText(edtName),
-                ViewHelper.getEdtText(edtEmail),
-                ViewHelper.getEdtText(edtPassword),
-                ViewHelper.getEdtText(edtConfPassword)
+                ViewUtils.getEdtText(edtName),
+                ViewUtils.getEdtText(edtEmail),
+                ViewUtils.getEdtText(edtPassword),
+                ViewUtils.getEdtText(edtConfPassword)
         );
     }
 
@@ -143,13 +143,13 @@ public class RegisterActivity extends AppCompatActivity {
             hideLoadingDialog();
             if (registerResult instanceof Result.Success) {
                 AuthenticatedUser user = ((Result.Success<AuthenticatedUser>) registerResult).getData();
-                ViewHelper.fireSuccessAlert(this, "Successfully Register");
+                ViewUtils.fireSuccessAlert(this, "Successfully Register");
                 AuthRepository.getInstance().createUserSession(RegisterActivity.this, user);
                 startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                 finish();
             } else {
                 String error = ((Result.Error<AuthenticatedUser>) registerResult).getErrorMessage();
-                ViewHelper.fireErrorAlert(this, error);
+                ViewUtils.fireErrorAlert(this, error);
             }
         });
     }
@@ -174,15 +174,15 @@ public class RegisterActivity extends AppCompatActivity {
         String edtPasswordHint = getString(R.string.password_edt_placeholder);
 
         edtName.setOnFocusChangeListener((v, hasFocus) ->
-                ViewHelper.hideTextInputHint(hasFocus, edtName, edtLayoutName, edtNameHint));
+                ViewUtils.hideTextInputHint(hasFocus, edtName, edtLayoutName, edtNameHint));
 
         edtEmail.setOnFocusChangeListener((v, hasFocus) ->
-                ViewHelper.hideTextInputHint(hasFocus, edtEmail, edtLayoutEmail, edtEmailHint));
+                ViewUtils.hideTextInputHint(hasFocus, edtEmail, edtLayoutEmail, edtEmailHint));
 
         edtPassword.setOnFocusChangeListener((v, hasFocus) ->
-                ViewHelper.hideTextInputHint(hasFocus, edtPassword, edtLayoutPassword, edtPasswordHint));
+                ViewUtils.hideTextInputHint(hasFocus, edtPassword, edtLayoutPassword, edtPasswordHint));
 
         edtConfPassword.setOnFocusChangeListener(((v, hasFocus) ->
-                ViewHelper.hideTextInputHint(hasFocus, edtConfPassword, edtLayoutConfPassword, edtPasswordHint)));
+                ViewUtils.hideTextInputHint(hasFocus, edtConfPassword, edtLayoutConfPassword, edtPasswordHint)));
     }
 }

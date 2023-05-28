@@ -2,7 +2,6 @@ package com.damskuy.petfeedermobileapp.ui.register;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Patterns;
 
 import androidx.annotation.NonNull;
@@ -12,10 +11,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.damskuy.petfeedermobileapp.R;
-import com.damskuy.petfeedermobileapp.common.Result;
+import com.damskuy.petfeedermobileapp.data.model.Result;
 import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
 import com.damskuy.petfeedermobileapp.data.auth.AuthRepository;
-import com.damskuy.petfeedermobileapp.ui.MainActivity;
 
 public class RegisterViewModel extends AndroidViewModel {
 

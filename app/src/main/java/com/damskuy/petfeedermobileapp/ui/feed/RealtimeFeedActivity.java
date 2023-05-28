@@ -14,7 +14,7 @@ import com.damskuy.petfeedermobileapp.data.model.RealtimeFeedRequest;
 import com.damskuy.petfeedermobileapp.data.model.RealtimeFeedResponse;
 import com.damskuy.petfeedermobileapp.api.retrofit.RetrofitService;
 import com.damskuy.petfeedermobileapp.data.model.Feed;
-import com.damskuy.petfeedermobileapp.helpers.ViewHelper;
+import com.damskuy.petfeedermobileapp.utils.ViewUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -30,15 +30,13 @@ public class RealtimeFeedActivity extends AppCompatActivity {
 
     private NumberPicker npServings;
     private Button btnFeed, btnCancel;
-    private RetrofitService apiService;
     private SweetAlertDialog loadingDialog;
-    private Context context;
+    private RetrofitService apiService = RetrofitClient.getClient().create(RetrofitService.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_realtime_feed);
-        context = RealtimeFeedActivity.this;
         initUI();
         initHandlers();
     }
@@ -57,22 +55,20 @@ public class RealtimeFeedActivity extends AppCompatActivity {
 
     private void initHandlers() {
         btnFeed.setOnClickListener(v -> {
-            int feedAmount = npServings.getValue();
-            apiService = RetrofitClient.getClient().create(RetrofitService.class);
+            Feed feed = new Feed().setFeedAmount(npServings.getValue());
+            RealtimeFeedRequest requestData = new RealtimeFeedRequest("592f5ec4-c3dd-4d5c-93fe-4ee3db513ad7", feed);
+            Call<RealtimeFeedResponse> apiCaller = apiService.realtimeFeed(requestData);
+            loadingDialog = ViewUtils.showLoadingDialog(RealtimeFeedActivity.this);
 
-            RealtimeFeedRequest requestData = new RealtimeFeedRequest("592f5ec4-c3dd-4d5c-93fe-4ee3db513ad7", feedAmount);
-            Call<RealtimeFeedResponse> call = apiService.realtimeFeed(requestData);
-            loadingDialog = ViewHelper.showLoadingDialog(this);
-
-            call.enqueue(new Callback<RealtimeFeedResponse>() {
+            apiCaller.enqueue(new Callback<RealtimeFeedResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<RealtimeFeedResponse> call, @NonNull Response<RealtimeFeedResponse> response) {
-                    ViewHelper.hideLoadingDialog(loadingDialog);
+                    ViewUtils.hideLoadingDialog(loadingDialog);
                     if (response.isSuccessful()) {
                         RealtimeFeedResponse responseData = response.body();
                         if (responseData != null) {
                             RealtimeFeedResponse.Data data  = responseData.getData();
-                            ViewHelper.fireSuccessAlert(context, "Fed at : " + data.getCreatedAt());
+                            ViewUtils.fireSuccessAlert(RealtimeFeedActivity.this, "Fed at : " + data.getCreatedAt());
                         }
                     } else {
                         ResponseBody errorBody = response.errorBody();
@@ -82,7 +78,7 @@ public class RealtimeFeedActivity extends AppCompatActivity {
                                 JsonObject jsonObject = new Gson().fromJson(errorBodyString, JsonObject.class);
                                 if (jsonObject.has("error")) {
                                     String errorMessage = jsonObject.get("error").getAsString();
-                                    ViewHelper.fireErrorAlert(context, errorMessage);
+                                    ViewUtils.fireErrorAlert(RealtimeFeedActivity.this, errorMessage);
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -92,8 +88,8 @@ public class RealtimeFeedActivity extends AppCompatActivity {
                 }
                 @Override
                 public void onFailure(@NonNull Call<RealtimeFeedResponse> call, @NonNull Throwable t) {
-                    ViewHelper.hideLoadingDialog(loadingDialog);
-                    ViewHelper.fireErrorAlert(context, "Connection error");
+                    ViewUtils.hideLoadingDialog(loadingDialog);
+                    ViewUtils.fireErrorAlert(RealtimeFeedActivity.this, "Connection error");
                 }
             });
         });

@@ -1,11 +1,13 @@
 package com.damskuy.petfeedermobileapp.api.retrofit;
 
+import com.damskuy.petfeedermobileapp.BuildConfig;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL = "http://192.168.242.59:8080"; // use local IP address of server
+    private static final String BASE_URL = BuildConfig.API_URL;
     private static Retrofit retrofit;
 
     public static Retrofit getClient() {
