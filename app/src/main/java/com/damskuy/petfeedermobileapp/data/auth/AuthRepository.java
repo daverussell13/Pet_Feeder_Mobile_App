@@ -97,8 +97,9 @@ public class AuthRepository {
         });
     }
 
-    public void logout() {
+    public void logout(Context context) {
         authDataSource.logoutFirebase();
+        clearUserSession(context);
         setLoggedInUser(null);
     }
 

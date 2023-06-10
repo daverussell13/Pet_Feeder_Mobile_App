@@ -21,9 +21,15 @@ import retrofit2.Response;
 public class ScheduleRepository {
 
     private final ScheduleDataSource scheduleDataSource;
+    private static ScheduleRepository instance;
 
-    public ScheduleRepository() {
+    private ScheduleRepository() {
         scheduleDataSource = new ScheduleDataSource();
+    }
+
+    public static synchronized ScheduleRepository getInstance() {
+        if (instance == null) instance = new ScheduleRepository();
+        return instance;
     }
 
     public void fetchDeviceSchedule(

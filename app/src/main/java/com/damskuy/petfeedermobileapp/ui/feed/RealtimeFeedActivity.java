@@ -25,7 +25,7 @@ public class RealtimeFeedActivity extends AppCompatActivity {
     private NumberPicker npServings;
     private Button btnFeed, btnCancel;
     private SweetAlertDialog loadingDialog;
-    private RetrofitService apiService = RetrofitClient.getClient().create(RetrofitService.class);
+    private final RetrofitService apiService = RetrofitClient.getClient().create(RetrofitService.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class RealtimeFeedActivity extends AppCompatActivity {
     private void initHandlers() {
         btnFeed.setOnClickListener(v -> {
             Feed feed = new Feed().setFeedAmount(npServings.getValue());
-            RealtimeFeedRequest requestData = new RealtimeFeedRequest("592f5ec4-c3dd-4d5c-93fe-4ee3", feed);
+            RealtimeFeedRequest requestData = new RealtimeFeedRequest("592f5ec4-c3dd-4d5c-93fe-4ee3db513ad7", feed);
             Call<RealtimeFeedResponse> apiCaller = apiService.realtimeFeed(requestData);
             loadingDialog = ViewUtils.showLoadingDialog(RealtimeFeedActivity.this);
 

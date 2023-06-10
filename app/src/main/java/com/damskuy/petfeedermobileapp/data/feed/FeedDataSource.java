@@ -1,6 +1,8 @@
 package com.damskuy.petfeedermobileapp.data.feed;
 
 import com.damskuy.petfeedermobileapp.BuildConfig;
+import com.damskuy.petfeedermobileapp.data.dto.RealtimeFeedRequest;
+import com.damskuy.petfeedermobileapp.data.dto.RealtimeFeedResponse;
 import com.damskuy.petfeedermobileapp.data.dto.ScheduleFeedRequest;
 import com.damskuy.petfeedermobileapp.data.dto.ScheduleFeedResponse;
 
@@ -21,7 +23,9 @@ public class FeedDataSource {
         feedService = retrofit.create(FeedService.class);
     }
 
-    public void realtimeFeed() {
+    public void realtimeFeed(Callback<RealtimeFeedResponse> callback, RealtimeFeedRequest request) {
+        Call<RealtimeFeedResponse> call = feedService.realtimeFeed(request);
+        call.enqueue(callback);
     }
 
     public void scheduleFeed(Callback<ScheduleFeedResponse> callback, ScheduleFeedRequest request) {
