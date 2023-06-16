@@ -87,12 +87,7 @@ public class ScheduledFeedActivity extends AppCompatActivity {
         btnSave.setOnClickListener(v -> {
             if (chosenDayAbv.isEmpty()) {
                 Toast.makeText(this, "Please choose the day!!", Toast.LENGTH_SHORT).show();
-                ViewUtils.vibratePhone(
-                        this,
-                        (Vibrator) getSystemService(Context.VIBRATOR_SERVICE),
-                        findViewById(R.id.day_input_container_schedule),
-                        500
-                );
+                ViewUtils.vibratePhone(this, (Vibrator) getSystemService(Context.VIBRATOR_SERVICE), findViewById(R.id.day_input_container_schedule), 500);
                 return;
             }
             String amPm = npAmPm.getValue() == 0 ? "AM" : "PM";

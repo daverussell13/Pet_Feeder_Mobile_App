@@ -5,7 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.damskuy.petfeedermobileapp.data.dto.GetDeviceScheduleResponse;
+import com.damskuy.petfeedermobileapp.data.model.response.GetDeviceScheduleResponse;
 import com.damskuy.petfeedermobileapp.data.model.Result;
 import com.damskuy.petfeedermobileapp.data.model.Schedule;
 import com.damskuy.petfeedermobileapp.utils.JsonUtils;

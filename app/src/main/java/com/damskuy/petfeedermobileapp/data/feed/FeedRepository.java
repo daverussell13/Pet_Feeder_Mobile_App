@@ -7,8 +7,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.damskuy.petfeedermobileapp.data.model.Result;
 import com.damskuy.petfeedermobileapp.data.model.Schedule;
-import com.damskuy.petfeedermobileapp.data.dto.ScheduleFeedRequest;
-import com.damskuy.petfeedermobileapp.data.dto.ScheduleFeedResponse;
+import com.damskuy.petfeedermobileapp.data.model.request.ScheduleFeedRequest;
+import com.damskuy.petfeedermobileapp.data.model.response.ScheduleFeedResponse;
 import com.damskuy.petfeedermobileapp.utils.JsonUtils;
 
 import java.io.IOException;

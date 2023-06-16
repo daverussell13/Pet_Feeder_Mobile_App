@@ -1,9 +1,9 @@
 package com.damskuy.petfeedermobileapp.data.feed;
 
-import com.damskuy.petfeedermobileapp.data.dto.RealtimeFeedRequest;
-import com.damskuy.petfeedermobileapp.data.dto.RealtimeFeedResponse;
-import com.damskuy.petfeedermobileapp.data.dto.ScheduleFeedRequest;
-import com.damskuy.petfeedermobileapp.data.dto.ScheduleFeedResponse;
+import com.damskuy.petfeedermobileapp.data.model.request.RealtimeFeedRequest;
+import com.damskuy.petfeedermobileapp.data.model.response.RealtimeFeedResponse;
+import com.damskuy.petfeedermobileapp.data.model.request.ScheduleFeedRequest;
+import com.damskuy.petfeedermobileapp.data.model.response.ScheduleFeedResponse;
 
 import retrofit2.Call;
 import retrofit2.http.POST;

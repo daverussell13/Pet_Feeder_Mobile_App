@@ -10,7 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.damskuy.petfeedermobileapp.data.feed.FeedRepository;
 import com.damskuy.petfeedermobileapp.data.model.Result;
 import com.damskuy.petfeedermobileapp.data.model.Schedule;
-import com.damskuy.petfeedermobileapp.data.dto.ScheduleFeedRequest;
+import com.damskuy.petfeedermobileapp.data.model.request.ScheduleFeedRequest;
 
 public class ScheduleFeedViewModel extends AndroidViewModel {
 

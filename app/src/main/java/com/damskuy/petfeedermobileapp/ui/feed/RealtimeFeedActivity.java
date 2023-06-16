@@ -9,8 +9,8 @@ import android.widget.NumberPicker;
 
 import com.damskuy.petfeedermobileapp.R;
 import com.damskuy.petfeedermobileapp.api.retrofit.RetrofitClient;
-import com.damskuy.petfeedermobileapp.data.dto.RealtimeFeedRequest;
-import com.damskuy.petfeedermobileapp.data.dto.RealtimeFeedResponse;
+import com.damskuy.petfeedermobileapp.data.model.request.RealtimeFeedRequest;
+import com.damskuy.petfeedermobileapp.data.model.response.RealtimeFeedResponse;
 import com.damskuy.petfeedermobileapp.api.retrofit.RetrofitService;
 import com.damskuy.petfeedermobileapp.data.model.Feed;
 import com.damskuy.petfeedermobileapp.utils.ViewUtils;

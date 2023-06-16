@@ -1,9 +1,7 @@
 package com.damskuy.petfeedermobileapp.data.schedule;
 
 import com.damskuy.petfeedermobileapp.BuildConfig;
-import com.damskuy.petfeedermobileapp.data.dto.GetDeviceScheduleResponse;
-
-import java.util.UUID;
+import com.damskuy.petfeedermobileapp.data.model.response.GetDeviceScheduleResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;

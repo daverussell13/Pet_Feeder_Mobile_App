@@ -1,8 +1,8 @@
-package com.damskuy.petfeedermobileapp.data.dto;
+package com.damskuy.petfeedermobileapp.data.model.response;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ScheduleFeedResponse {
+public class RealtimeFeedResponse {
 
     private Data data;
 
@@ -10,14 +10,21 @@ public class ScheduleFeedResponse {
 
     public static class Data {
 
-        @SerializedName("schedule_id")
-        private int scheduleId;
+        @SerializedName("device_id")
+        private String deviceId;
+
+        @SerializedName("feed_amount")
+        private Integer feedAmount;
 
         @SerializedName("created_at")
         private String createdAt;
 
-        public int getScheduleId() {
-            return scheduleId;
+        public String getDeviceId() {
+            return deviceId;
+        }
+
+        public Integer getFeedAmount() {
+            return feedAmount;
         }
 
         public String getCreatedAt() {
@@ -32,5 +39,4 @@ public class ScheduleFeedResponse {
     public String getError() {
         return error;
     }
-
 }

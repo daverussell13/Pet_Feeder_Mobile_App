@@ -1,4 +1,4 @@
-package com.damskuy.petfeedermobileapp.data.dto;
+package com.damskuy.petfeedermobileapp.data.model.request;
 
 import com.damskuy.petfeedermobileapp.data.model.Feed;
 import com.google.gson.annotations.SerializedName;
