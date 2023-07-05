@@ -7,7 +7,7 @@ public class Feed {
     private int feedAmount = 1;
 
     public Feed setFeedAmount(int amount) {
-        if (amount < MAX_FEED_AMOUNT && amount > MIN_FEED_AMOUNT) {
+        if (amount <= MAX_FEED_AMOUNT && amount > MIN_FEED_AMOUNT) {
             feedAmount = amount;
         }
         return this;

@@ -71,4 +71,14 @@
     <string name="saturday_abv">Sat</string>
     <string name="sunday_abv">Sun</string>
     <string name="realtime_feed">Realtime Feed</string>
+    <string name="add_device_title">ADD DEVICE</string>
+    <string name="turn_on_bluetooth">Turn on Bluetooth!</string>
+    <string name="scanning_nearby_devices">Scanning nearby devices…</string>
+    <string name="fetching_device_schedules">Fetching device schedules…</string>
+    <string name="add_device">ADD DEVICE</string>
+    <string name="device_image">Device Image</string>
+    <string name="enter_wi_fi_information">Enter Wi-Fi Information</string>
+    <string name="enter_wi_fi_password">Enter Wi-Fi password</string>
+    <string name="enter_wi_fi_ssid">Enter Wi-FI SSID</string>
+    <string name="fetch_schedule_error">Unable to fetch schedules data :(</string>
 </resources>

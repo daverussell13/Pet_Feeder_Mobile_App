@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.damskuy.petfeedermobileapp.data.model.Result;
-import com.damskuy.petfeedermobileapp.data.entity.FirebaseUserEntity;
+import com.damskuy.petfeedermobileapp.data.model.User;
 import com.damskuy.petfeedermobileapp.data.model.AuthenticatedUser;
 import com.damskuy.petfeedermobileapp.data.session.SessionManager;
 import com.damskuy.petfeedermobileapp.data.user.UserDataSource;
@@ -66,7 +66,7 @@ public class AuthRepository {
         authDataSource.registerFirebase(email, password, task -> {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if (task.isSuccessful() && user != null) {
-                FirebaseUserEntity userEntity = new FirebaseUserEntity(name);
+                User userEntity = new User(name);
                 storeUserToRealtimeDB(user, userEntity, result);
             }
             else result.postValue(new Result.Error<>(task.getException()));
@@ -110,12 +110,12 @@ public class AuthRepository {
         userDataSource.fetchUserData(user.getUid(), new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                FirebaseUserEntity userEntity = snapshot.getValue(FirebaseUserEntity.class);
+                User userEntity = snapshot.getValue(User.class);
                 if (userEntity == null) {
                     String firstname = "User";
                     if (user.getDisplayName() != null)
                         firstname = user.getDisplayName().split(" ")[0];
-                    userEntity = new FirebaseUserEntity(firstname);
+                    userEntity = new User(firstname);
                     storeUserToRealtimeDB(user, userEntity, result);
                 } else {
                     AuthenticatedUser authUser = new AuthenticatedUser(
@@ -136,7 +136,7 @@ public class AuthRepository {
 
     private void storeUserToRealtimeDB(
             FirebaseUser user,
-            FirebaseUserEntity userEntity,
+            User userEntity,
             MutableLiveData<Result<AuthenticatedUser>> result
     ) {
         userDataSource.storeUserData(user.getUid(), userEntity, (error, ref) -> {
@@ -160,7 +160,7 @@ public class AuthRepository {
         userDataSource.fetchUserData(user.getUid(), new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                FirebaseUserEntity userEntity = snapshot.getValue(FirebaseUserEntity.class);
+                User userEntity = snapshot.getValue(User.class);
                 if (userEntity != null) {
                     AuthenticatedUser authUser = new AuthenticatedUser(
                             user.getUid(),

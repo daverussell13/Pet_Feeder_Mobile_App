@@ -105,6 +105,7 @@ public class ScheduledFeedActivity extends AppCompatActivity {
             if (loadingDialog != null) loadingDialog.dismissWithAnimation();
             if (scheduleFeedResult instanceof Result.Success) {
                 ViewUtils.fireSuccessAlert(ScheduledFeedActivity.this, "Added new schedule!");
+                scheduleFeedViewModel.clearCache();
             } else {
                 String errorMsg = ((Result.Error<Schedule>) scheduleFeedResult).getErrorMessage();
                 ViewUtils.fireErrorAlert(ScheduledFeedActivity.this, errorMsg);

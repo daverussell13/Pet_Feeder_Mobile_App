@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ public class ScheduleFragment extends Fragment {
 
     private ScheduleViewModel scheduleViewModel;
     private View fragmentView;
+    private TextView txtFetchingSchedule;
     private RecyclerView scheduleRecyclerView;
 
     @Nullable
@@ -47,13 +49,14 @@ public class ScheduleFragment extends Fragment {
     }
 
     private void bindViewModel() {
-        ScheduleViewModelFactory factory = new ScheduleViewModelFactory();
+        ScheduleViewModelFactory factory = new ScheduleViewModelFactory(requireActivity());
         scheduleViewModel = new ViewModelProvider(this, factory).get(ScheduleViewModel.class);
     }
 
     private void initUI() {
         scheduleRecyclerView = fragmentView.findViewById(R.id.rv_schedule);
         scheduleRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        txtFetchingSchedule = fragmentView.findViewById(R.id.txt_fetching_device_schedule);
         updateScheduleRecyclerView(new ArrayList<>());
     }
 
@@ -61,10 +64,12 @@ public class ScheduleFragment extends Fragment {
         scheduleViewModel.getFetchScheduleResult().observe(getViewLifecycleOwner(), scheduleResult -> {
             if (scheduleResult instanceof Result.Success) {
                 ArrayList<Schedule> schedules = ((Result.Success<ArrayList<Schedule>>)scheduleResult).getData();
+                scheduleViewModel.saveScheduleToCache(schedules);
                 updateScheduleRecyclerView(schedules);
+                txtFetchingSchedule.setVisibility(View.GONE);
             } else {
                 String error = ((Result.Error<ArrayList<Schedule>>)scheduleResult).getErrorMessage();
-                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+                txtFetchingSchedule.setText(error);
             }
         });
     }

@@ -1,10 +1,6 @@
 package com.damskuy.petfeedermobileapp.data.user;
 
-import androidx.annotation.NonNull;
-
-import com.damskuy.petfeedermobileapp.data.entity.FirebaseUserEntity;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.damskuy.petfeedermobileapp.data.model.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -26,7 +22,7 @@ public class UserDataSource {
 
     public void storeUserData(
             String uid,
-            FirebaseUserEntity user,
+            User user,
             DatabaseReference.CompletionListener callback
     ) {
         usersRef.child(uid).setValue(user, callback);

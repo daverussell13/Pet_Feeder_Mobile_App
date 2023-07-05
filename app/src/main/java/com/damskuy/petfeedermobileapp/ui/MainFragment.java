@@ -37,7 +37,7 @@ public class MainFragment {
         } else if (fragmentIconId == R.id.item_devices) {
             fragment = new DevicesFragment();
             fragmentType = FragmentType.DEVICE_FRAGMENT;
-            fragmentTitle = "Devices";
+            fragmentTitle = "Add Devices";
         }  else {
             throw new IllegalArgumentException("Not a valid id");
         }
